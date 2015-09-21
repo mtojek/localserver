@@ -29,7 +29,7 @@ func TestStartServer(t *testing.T) {
 	assert := assert.New(t)
 
 	// given
-	hostPort := "127.0.0.1:9000"
+	hostPort := "127.0.0.1:59000"
 	scheme := "http"
 	sut := NewLocalServer(hostPort, scheme)
 
@@ -47,7 +47,7 @@ func TestStartHTTPServer(t *testing.T) {
 	assert := assert.New(t)
 
 	// given
-	hostPort := "127.0.0.1:9000"
+	hostPort := "127.0.0.1:59000"
 	scheme := "http"
 	sut := NewLocalServer(hostPort, scheme)
 
@@ -65,7 +65,7 @@ func TestStartHTTPSServer(t *testing.T) {
 	assert := assert.New(t)
 
 	// given
-	hostPort := "127.0.0.1:9000"
+	hostPort := "127.0.0.1:59000"
 	scheme := "https"
 	sut := NewLocalServer(hostPort, scheme)
 
@@ -83,7 +83,7 @@ func TestStopServer(t *testing.T) {
 	assert := assert.New(t)
 
 	// given
-	hostPort := "127.0.0.1:9000"
+	hostPort := "127.0.0.1:59000"
 	scheme := "http"
 	sut := NewLocalServer(hostPort, scheme)
 
