@@ -1,4 +1,6 @@
 # localserver
+[![Build Status](https://travis-ci.org/mtojek/localserver.svg?branch=master)](https://travis-ci.org/mtojek/localserver)
+
 Go HTTP/HTTPS server, useful in unit tests
 
 Status: **Done**
