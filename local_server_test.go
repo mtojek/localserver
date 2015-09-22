@@ -86,14 +86,13 @@ func TestStopServer(t *testing.T) {
 	hostPort := "127.0.0.1:59004"
 	scheme := "http"
 	sut := NewLocalServer(hostPort, scheme)
+	sut.Start()
 
 	// when
-	sut.Start()
 	sut.Stop()
 	isRunning := checkIfLocalServerIsRunning(scheme + "://" + hostPort)
 
 	// then
-
 	assert.False(isRunning, "Server should not be available now")
 }
 

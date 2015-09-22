@@ -70,14 +70,16 @@ func (l *LocalServer) startServing() {
 	l.waitUntilReady()
 }
 
+// Stop method stops the running server.
+func (l *LocalServer) Stop() {
+	l.listener.Stop <- true
+	l.waitUntilStopped()
+}
+
 func (l *LocalServer) waitUntilReady() {
 	var ready bool
 
-	tr := &http.Transport{TLSClientConfig: &tls.Config{InsecureSkipVerify: true}}
-	client := http.Client{
-		Transport: tr,
-	}
-
+	client := l.createHTTPClient()
 	for !ready {
 		if _, error := client.Get(l.scheme + "://" + l.hostPort); nil != error {
 			log.Printf("Waiting for local server to start: %v, error: %v\n", l.hostPort, error)
@@ -90,8 +92,24 @@ func (l *LocalServer) waitUntilReady() {
 	log.Printf("Local server started: %v\n", l.hostPort)
 }
 
-// Stop method stops the running server.
-func (l *LocalServer) Stop() {
-	l.listener.Stop <- true
+func (l *LocalServer) waitUntilStopped() {
+	var stopped bool
+
+	client := l.createHTTPClient()
+	for !stopped {
+		if _, error := client.Get(l.scheme + "://" + l.hostPort); nil == error {
+			log.Printf("Waiting for local server to stop: %v, error: %v\n", l.hostPort, error)
+			time.Sleep(10 * time.Millisecond)
+		} else {
+			stopped = true
+		}
+	}
+
 	log.Printf("Local server stopped: %v\n", l.hostPort)
+}
+
+func (l *LocalServer) createHTTPClient() *http.Client {
+	tr := &http.Transport{TLSClientConfig: &tls.Config{InsecureSkipVerify: true}}
+	client := &http.Client{Transport: tr}
+	return client
 }
