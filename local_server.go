@@ -98,7 +98,7 @@ func (l *LocalServer) waitUntilStopped() {
 	client := l.createHTTPClient()
 	for !stopped {
 		if _, error := client.Get(l.scheme + "://" + l.hostPort); nil == error {
-			log.Printf("Waiting for local server to stop: %v, error: %v\n", l.hostPort, error)
+			log.Printf("Waiting for local server to stop: %v\n", l.hostPort)
 			time.Sleep(10 * time.Millisecond)
 		} else {
 			stopped = true
